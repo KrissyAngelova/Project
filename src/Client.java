@@ -1,5 +1,7 @@
 import java.util.ArrayList;
-// Test GitHub coment
+
+
+// GitHubSucks
 public class Client{
 	private String username;
 	private String password;
