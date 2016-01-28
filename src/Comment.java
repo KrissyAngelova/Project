@@ -1,5 +1,5 @@
 import java.time.LocalDateTime;
-
+// some comment
 public class Comment implements Likeable {
 	private LocalDateTime dateTime;
 	private String content;
