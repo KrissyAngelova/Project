@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-
+// GitHubSucks
 public class Client{
 	private String username;
 	private String password;
