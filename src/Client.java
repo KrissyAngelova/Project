@@ -34,40 +34,89 @@ public class Client{
 	}
 	
 	void likePicture(Picture p){
-		if(!this.likedPics.contains(p)){
-			this.likedPics.add(p);
-			p.beLiked();
+		if(p!=null){
+			if(!this.likedPics.contains(p)){
+				this.likedPics.add(p);
+				p.beLiked();
+			}
 		}
 	}
 	
 	void unlikePicture(Picture p){
-		if(this.likedPics.contains(p)){
-			p.beUnliked();
-			this.likedPics.remove(p);
+		if(p!=null){
+			if(this.likedPics.contains(p)){
+				p.beUnliked();
+				this.likedPics.remove(p);
+			}
 		}
 	}
 	
 	// Добавяне към favourites
 	void pinPicture(Picture p){
-		if(!this.favourites.pics.contains(p)){
-			this.favourites.pics.add(p);
+		if(p!=null){
+			if(!this.favourites.pics.contains(p)){
+				this.favourites.pics.add(p);
+			}
 		}
 	}
 	
 	// Премахване от favourites
 	void unpinPicture(Picture p){
-		if(this.favourites.pics.contains(p))
-			this.favourites.pics.remove(p);
+		if(p!=null){
+			if(this.favourites.pics.contains(p))
+				this.favourites.pics.remove(p);
+		}
 	}
 	
 	void addComment(Picture p){
-		Scanner sc = new Scanner(System.in);
-		String content = sc.nextLine();
-		p.getCommentsArray().add(new Comment(content));
-		sc.close();
+		if(p!=null){
+			Scanner sc = new Scanner(System.in);
+			String content = sc.nextLine();
+			p.getCommentsArray().add(new Comment(content));
+			sc.close();
+		}
 	}
 	
-	//TODO: функции за like,unlike, dislike, undislike за коментари
+
+    // За like-ване  на коментар	
+	void likeComment(Comment c){
+		if(c!=null){
+			if(!this.likedComments.contains(c)){
+				c.beLiked();
+				this.likedComments.add(c);
+			}
+		}
+	}
+	
+	// За unlike-ване на like-нат коментар
+	void unlikeComment(Comment c){
+		if(c!=null){
+			if(this.likedComments.contains(c)){
+				c.beUnliked();
+				this.likedComments.remove(c);
+			}
+		}
+	}
+	
+	// За dislike-ване на коментар
+	void disLikeComment(Comment c){
+		if(c!=null){
+			if(!this.dislikedComments.contains(c)){
+				c.beDisLiked();
+				this.dislikedComments.add(c);
+			}
+		}
+	}
+	
+	// За undislike-ване на dislike-нат коментар
+	void undislikeComment(Comment c){
+		if(c!=null){
+			if(this.dislikedComments.contains(c)){
+				c.beUndisliked();
+				this.dislikedComments.add(c);
+			}
+		}
+	}
 	
 	
 	void showMyPics(){

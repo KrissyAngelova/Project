@@ -29,7 +29,9 @@ public class Album {
 	void showAlbum(){
 		System.out.println(this.name);
 		for(Picture p : this.pics){
-			p.showPicture();
+			if(p!=null){
+				p.showPicture();
+			}
 		}
 	}
 }
