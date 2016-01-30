@@ -1,7 +1,8 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.ArrayList;
 
-public class Picture implements Likeable {
+public class Picture{
 	private LocalDateTime dateTime;
 	private String description;
 	private int likes;
@@ -14,9 +15,24 @@ public class Picture implements Likeable {
 		this.coments = new ArrayList<Comment>();
 	}
 
-	@Override
 	public void beLiked() {
 		this.likes++;
 	}
 	
+	public void beUnliked(){
+		if(this.likes>0){
+			this.likes--;
+		}
+	}
+	
+	public ArrayList<Comment> getCommentsArray(){
+		return this.coments;
+	}
+	
+	void showPicture(){
+		System.out.println("-------------");
+		System.out.println("***Picture***");
+		System.out.println(dateTime+" --- Likes:"+this.likes);
+		System.out.println("-------------");
+	}
 }

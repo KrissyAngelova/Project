@@ -1,6 +1,6 @@
 import java.time.LocalDateTime;
 // some comment
-public class Comment implements Likeable {
+public class Comment{
 	private LocalDateTime dateTime;
 	private String content;
 	private int likes;
@@ -14,16 +14,35 @@ public class Comment implements Likeable {
 		this.dislikes = 0;
 	}
 
-
-	@Override
+	// Да харесаш коментар
 	public void beLiked() {
 		this.likes++;
 	}
+	//Ако си like-нал някъв коментар и искаш да го unlike-неш
+	public void beUnliked(){
+		if(this.likes>0){
+			this.likes--;
+		}
+	}
 	
 
-	
+	// Съшото като при like, но понеже нали за разлика от снимките коментарите могат
+	// да получават и негативен вот - dislike
 	public void beDisLiked(){
 		this.dislikes++;
+	}
+	public void beUndisliked(){
+		if(this.dislikes>0){
+			this.dislikes--;
+		}
+	}
+	
+	void showComment(){
+		System.out.println("----------------------");
+		System.out.println(this.dateTime);
+		System.out.println(this.content);
+		System.out.println("Likes:"+this.likes+"      "+"Dislkes:"+this.dislikes);
+		System.out.println("----------------------");
 	}
 
 }
