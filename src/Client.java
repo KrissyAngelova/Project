@@ -5,9 +5,9 @@ import java.util.Scanner;
 public class Client{
 	private String username;
 	private String password;
-	private Album myPics;
-	private Album favourites;// Пиннатите снимки
-	
+	private PrivateAlbum myPics;
+	private PrivateAlbum favourites;// Пиннатите снимки
+	static Album.NewPictures newPics = Album.NewPictures.getNewPictures();
 	private ArrayList<Picture> likedPics;// тук се пазят like-натите снимки, за да се знае, че те
 	                                     //могат да се unlike-ват. Няма как да unlike-неш снимка,
 										// която не си like-нал
@@ -20,8 +20,8 @@ public class Client{
 	Client(String username, String password){
 		this.username = username;
 		this.password = password;
-		this.myPics = new Album();
-		this.favourites = new Album("Favourites");
+		this.myPics = new PrivateAlbum();
+		this.favourites = new PrivateAlbum("Favourites");
 		this.likedPics = new ArrayList();
 	}
 	
@@ -31,6 +31,14 @@ public class Client{
 	
 	String getPass(){
 		return this.password;
+	}
+	
+	//При качването на снимка се създава нов обект от тип снимка с описание
+	//добавя се към албума myPics, и се обновява NewPictures
+	void uploadPicture(String description){
+		Picture p = new Picture(description, this);
+		this.myPics.addPicture(p);
+	    this.newPics.addPicture(p);
 	}
 	
 	void likePicture(Picture p){
@@ -72,7 +80,7 @@ public class Client{
 		if(p!=null){
 			Scanner sc = new Scanner(System.in);
 			String content = sc.nextLine();
-			p.getCommentsArray().add(new Comment(content));
+			p.getCommentsArray().add(new Comment(content, this));
 			sc.close();
 		}
 	}
@@ -118,7 +126,7 @@ public class Client{
 		}
 	}
 	
-	
+	//Всеки клиент вижда бутоните:"My Pics", "Favourites", "New Pictures", "Top Rated"
 	void showMyPics(){
 		if(this.myPics.pics.isEmpty()){
 			System.out.println("No pics to show");
@@ -133,5 +141,16 @@ public class Client{
 		}
 		else
 			this.favourites.showAlbum();
+	}
+	
+	class PrivateAlbum extends Album{ // Двата лични албума на всеки клиент са от тип вътрешен клас, 
+									 //защото те не могат да бъдат създавани без клиент
+		private PrivateAlbum(){
+			super();
+		}
+		
+		private PrivateAlbum(String name){
+			super(name);
+		}
 	}
 }
