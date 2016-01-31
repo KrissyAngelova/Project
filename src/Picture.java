@@ -5,13 +5,15 @@ import java.util.ArrayList;
 public class Picture{
 	private LocalDateTime dateTime;
 	private String description;
-	private int likes;
+	private Client author;// Всяка снимка има автор
+	private Integer likes;
 	private ArrayList<Comment> comments;
 	private enum RatingCategory{HOT, TRENDING, FRESH};
 	private RatingCategory category;
 	
-	Picture(String description){
+	Picture(String description, Client author){
 		this.description = description;
+		this.author = author;
 		this.dateTime = LocalDateTime.now();
 		this.likes = 0;
 		this.comments = new ArrayList<Comment>();
@@ -45,9 +47,15 @@ public class Picture{
 	}
 	
 	void showPicture(){
+		System.out.println(this.author.getUsername());
 		System.out.println("-------------");
 		System.out.println("***Picture***");
 		System.out.println(dateTime+" --- Likes:"+this.likes);
 		System.out.println("-------------");
+		System.out.println(this.description);
+	}
+	
+	Integer getLikes(){
+		return this.likes;
 	}
 }
