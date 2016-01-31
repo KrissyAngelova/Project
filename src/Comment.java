@@ -3,12 +3,13 @@ import java.time.LocalDateTime;
 public class Comment{
 	private LocalDateTime dateTime;
 	private String content;
+	private Client author; //Всеки коментар си има автор
 	private int likes;
 	private int dislikes;
 	
-	
-	Comment(String content){
+	Comment(String content, Client author){
 		this.content = content;
+		this.author = author;
 		this.dateTime = LocalDateTime.now();
 		this.likes = 0;
 		this.dislikes = 0;
@@ -38,6 +39,7 @@ public class Comment{
 	}
 	
 	void showComment(){
+		System.out.println(this.author.getUsername()+" says: ");
 		System.out.println("----------------------");
 		System.out.println(this.dateTime);
 		System.out.println(this.content);
