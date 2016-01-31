@@ -1,12 +1,12 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
-public class Album {
+public abstract class Album { // За да не се създават просто албуми
 	protected String name;
 	protected ArrayList<Picture> pics;
-	protected int i = 1;
-	
+
 	Album(){
-		this.name = "Album "+(this.i++);
+		this.name = "MyAlbum ";
 		this.pics = new ArrayList();
 	}
 	
@@ -23,7 +23,8 @@ public class Album {
 	}
 	
 	void removePicture(Picture p){
-		this.pics.remove(p);
+		if(this.pics.contains(p))
+			this.pics.remove(p);
 	}
 	
 	void showAlbum(){
@@ -34,4 +35,44 @@ public class Album {
 			}
 		}
 	}
+	
+	static class NewPictures extends Album{ //Singleton
+		private ArrayList<Picture> pics;
+		private static NewPictures uniqueInstance;
+
+		private NewPictures() {
+			this.pics = new ArrayList<Picture>();
+		}
+
+		static NewPictures getNewPictures() {
+			if (uniqueInstance == null) {
+				uniqueInstance = new NewPictures();
+			}
+			return uniqueInstance;
+		}
+		
+	}
+	static class TopRatedPictures extends Album{ // Singleton
+		private ArrayList<Picture>pics;
+		private static TopRatedPictures uniqueInstance;
+		
+		private TopRatedPictures(){
+			this.pics = new ArrayList();
+		}
+		
+		static TopRatedPictures getTopRatedPics(){
+			if(uniqueInstance == null){
+				uniqueInstance = new TopRatedPictures();
+			}
+			return uniqueInstance;
+		}
+		
+		@Override
+		void addPicture(Picture p){//Добавя снимка и се сортира по боя лайкове
+			super.addPicture(p);
+			Collections.sort(this.pics,(p1,p2)->p1.getLikes().compareTo(p2.getLikes()));
+		}
+	}
+	
+		
 }
