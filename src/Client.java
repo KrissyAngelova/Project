@@ -3,7 +3,10 @@ import java.util.Scanner;
 
 
 public class Client{
-	private String username;
+	private String firstName;
+	private String lastName;
+	private String email;
+	private String username;// Formiram go ot e-maila
 	private String password;
 	private PrivateAlbum myPics;
 	private PrivateAlbum favourites;// Пиннатите снимки
@@ -17,8 +20,11 @@ public class Client{
 	private ArrayList<Comment> dislikedComments;
 	// предполагам, че като направим нещата с база данни, тия масиви ще отпаднат от кода.
 	
-	Client(String username, String password){
-		this.username = username;
+	Client(String firstName, String lastName, String email, String password){
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.username = extractEmailContent();
 		this.password = password;
 		this.myPics = new PrivateAlbum();
 		this.favourites = new PrivateAlbum("Favourites");
@@ -26,7 +32,7 @@ public class Client{
 	}
 	
 	String getUsername(){
-		return this.username;
+		return this.email;
 	}
 	
 	String getPass(){
@@ -152,5 +158,15 @@ public class Client{
 		private PrivateAlbum(String name){
 			super(name);
 		}
+	}
+	
+	String extractEmailContent(){
+		StringBuffer username = new StringBuffer();
+		for(int i = 0; i<email.length(); i++){
+			while(i != '@'){
+				username.append(email.charAt(i));
+			}
+		}
+		return username.toString();
 	}
 }
