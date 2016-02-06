@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Demo {
 	
@@ -62,15 +64,18 @@ public class Demo {
 	
 	//При регистрация
 	static void registration(ArrayList<Client>list){
-		String username;
+		String firstName;
+		String lastName;
+		String email;
 		String password;
 		
 		Scanner sc = new Scanner(System.in);
+		firstName = sc.nextLine();
+		lastName = sc.nextLine();
 		do{
-			System.out.println("Enter your username: ");
-			username = sc.next();
-			
-		}while(!usernameisFree(username, list));
+			System.out.println("Enter your email: ");
+			email = sc.next();
+		}while(!usernameisFree(email, list) && !emailValidate(email));
 		do{
 			System.out.println("You pass must be secure! It must contains lower case, upper case and number "
 					+ "\nand must be between 5 and 20 symbols");
@@ -78,7 +83,7 @@ public class Demo {
 			password = sc.next();
 		}while(!checkForSecurePassword(password));
 		
-		list.add(new Client(username, password));
+		list.add(new Client(firstName, lastName, email, password));
 		System.out.println("Your account is created!!!");
 		sc.close();
 	}
@@ -158,5 +163,14 @@ public class Demo {
 		}
 		return false;
 	}
+	
+	//e-mail validation
+	public static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
+		    Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+
+		public static boolean emailValidate(String emailStr) {
+		        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
+		        return matcher.find();
+		}
 	
 }
