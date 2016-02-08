@@ -6,25 +6,25 @@ public class Client{
 	private String firstName;
 	private String lastName;
 	private String email;
-	private String username;// Formiram go ot e-maila
+	private String nickname;// Formiram go ot firstName i lastName
 	private String password;
 	private PrivateAlbum myPics;
-	private PrivateAlbum favourites;// Пиннатите снимки
+	private PrivateAlbum favourites;// ГЏГЁГ­Г­Г ГІГЁГІГҐ Г±Г­ГЁГ¬ГЄГЁ
 	static Album.NewPictures newPics = Album.NewPictures.getNewPictures();
-	private ArrayList<Picture> likedPics;// тук се пазят like-натите снимки, за да се знае, че те
-	                                     //могат да се unlike-ват. Няма как да unlike-неш снимка,
-										// която не си like-нал
-	// същото и за like-натите коментари
+	private ArrayList<Picture> likedPics;// ГІГіГЄ Г±ГҐ ГЇГ Г§ГїГІ like-Г­Г ГІГЁГІГҐ Г±Г­ГЁГ¬ГЄГЁ, Г§Г  Г¤Г  Г±ГҐ Г§Г­Г ГҐ, Г·ГҐ ГІГҐ
+	                                     //Г¬Г®ГЈГ ГІ Г¤Г  Г±ГҐ unlike-ГўГ ГІ. ГЌГїГ¬Г  ГЄГ ГЄ Г¤Г  unlike-Г­ГҐГё Г±Г­ГЁГ¬ГЄГ ,
+										// ГЄГ®ГїГІГ® Г­ГҐ Г±ГЁ like-Г­Г Г«
+	// Г±ГєГ№Г®ГІГ® ГЁ Г§Г  like-Г­Г ГІГЁГІГҐ ГЄГ®Г¬ГҐГ­ГІГ Г°ГЁ
 	private ArrayList<Comment> likedComments;
-	// и за dislike-натите коментари
+	// ГЁ Г§Г  dislike-Г­Г ГІГЁГІГҐ ГЄГ®Г¬ГҐГ­ГІГ Г°ГЁ
 	private ArrayList<Comment> dislikedComments;
-	// предполагам, че като направим нещата с база данни, тия масиви ще отпаднат от кода.
+	// ГЇГ°ГҐГ¤ГЇГ®Г«Г ГЈГ Г¬, Г·ГҐ ГЄГ ГІГ® Г­Г ГЇГ°Г ГўГЁГ¬ Г­ГҐГ№Г ГІГ  Г± ГЎГ Г§Г  Г¤Г Г­Г­ГЁ, ГІГЁГї Г¬Г Г±ГЁГўГЁ Г№ГҐ Г®ГІГЇГ Г¤Г­Г ГІ Г®ГІ ГЄГ®Г¤Г .
 	
 	Client(String firstName, String lastName, String email, String password){
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.username = extractEmailContent();
+		this.nickname = firstName+" "+lastName;
 		this.password = password;
 		this.myPics = new PrivateAlbum();
 		this.favourites = new PrivateAlbum("Favourites");
@@ -39,8 +39,8 @@ public class Client{
 		return this.password;
 	}
 	
-	//При качването на снимка се създава нов обект от тип снимка с описание
-	//добавя се към албума myPics, и се обновява NewPictures
+	//ГЏГ°ГЁ ГЄГ Г·ГўГ Г­ГҐГІГ® Г­Г  Г±Г­ГЁГ¬ГЄГ  Г±ГҐ Г±ГєГ§Г¤Г ГўГ  Г­Г®Гў Г®ГЎГҐГЄГІ Г®ГІ ГІГЁГЇ Г±Г­ГЁГ¬ГЄГ  Г± Г®ГЇГЁГ±Г Г­ГЁГҐ
+	//Г¤Г®ГЎГ ГўГї Г±ГҐ ГЄГєГ¬ Г Г«ГЎГіГ¬Г  myPics, ГЁ Г±ГҐ Г®ГЎГ­Г®ГўГїГўГ  NewPictures
 	void uploadPicture(String description){
 		Picture p = new Picture(description, this);
 		this.myPics.addPicture(p);
@@ -65,7 +65,7 @@ public class Client{
 		}
 	}
 	
-	// Добавяне към favourites
+	// Г„Г®ГЎГ ГўГїГ­ГҐ ГЄГєГ¬ favourites
 	void pinPicture(Picture p){
 		if(p!=null){
 			if(!this.favourites.pics.contains(p)){
@@ -74,7 +74,7 @@ public class Client{
 		}
 	}
 	
-	// Премахване от favourites
+	// ГЏГ°ГҐГ¬Г ГµГўГ Г­ГҐ Г®ГІ favourites
 	void unpinPicture(Picture p){
 		if(p!=null){
 			if(this.favourites.pics.contains(p))
@@ -92,7 +92,7 @@ public class Client{
 	}
 	
 
-    // За like-ване  на коментар	
+    // Г‡Г  like-ГўГ Г­ГҐ  Г­Г  ГЄГ®Г¬ГҐГ­ГІГ Г°	
 	void likeComment(Comment c){
 		if(c!=null){
 			if(!this.likedComments.contains(c)){
@@ -102,7 +102,7 @@ public class Client{
 		}
 	}
 	
-	// За unlike-ване на like-нат коментар
+	// Г‡Г  unlike-ГўГ Г­ГҐ Г­Г  like-Г­Г ГІ ГЄГ®Г¬ГҐГ­ГІГ Г°
 	void unlikeComment(Comment c){
 		if(c!=null){
 			if(this.likedComments.contains(c)){
@@ -112,7 +112,7 @@ public class Client{
 		}
 	}
 	
-	// За dislike-ване на коментар
+	// Г‡Г  dislike-ГўГ Г­ГҐ Г­Г  ГЄГ®Г¬ГҐГ­ГІГ Г°
 	void disLikeComment(Comment c){
 		if(c!=null){
 			if(!this.dislikedComments.contains(c)){
@@ -122,7 +122,7 @@ public class Client{
 		}
 	}
 	
-	// За undislike-ване на dislike-нат коментар
+	// Г‡Г  undislike-ГўГ Г­ГҐ Г­Г  dislike-Г­Г ГІ ГЄГ®Г¬ГҐГ­ГІГ Г°
 	void undislikeComment(Comment c){
 		if(c!=null){
 			if(this.dislikedComments.contains(c)){
@@ -132,7 +132,7 @@ public class Client{
 		}
 	}
 	
-	//Всеки клиент вижда бутоните:"My Pics", "Favourites", "New Pictures", "Top Rated"
+	//Г‚Г±ГҐГЄГЁ ГЄГ«ГЁГҐГ­ГІ ГўГЁГ¦Г¤Г  ГЎГіГІГ®Г­ГЁГІГҐ:"My Pics", "Favourites", "New Pictures", "Top Rated"
 	void showMyPics(){
 		if(this.myPics.pics.isEmpty()){
 			System.out.println("No pics to show");
@@ -149,8 +149,8 @@ public class Client{
 			this.favourites.showAlbum();
 	}
 	
-	class PrivateAlbum extends Album{ // Двата лични албума на всеки клиент са от тип вътрешен клас, 
-									 //защото те не могат да бъдат създавани без клиент
+	class PrivateAlbum extends Album{ // Г„ГўГ ГІГ  Г«ГЁГ·Г­ГЁ Г Г«ГЎГіГ¬Г  Г­Г  ГўГ±ГҐГЄГЁ ГЄГ«ГЁГҐГ­ГІ Г±Г  Г®ГІ ГІГЁГЇ ГўГєГІГ°ГҐГёГҐГ­ ГЄГ«Г Г±, 
+									 //Г§Г Г№Г®ГІГ® ГІГҐ Г­ГҐ Г¬Г®ГЈГ ГІ Г¤Г  ГЎГєГ¤Г ГІ Г±ГєГ§Г¤Г ГўГ Г­ГЁ ГЎГҐГ§ ГЄГ«ГЁГҐГ­ГІ
 		private PrivateAlbum(){
 			super();
 		}
@@ -160,13 +160,5 @@ public class Client{
 		}
 	}
 	
-	String extractEmailContent(){
-		StringBuffer username = new StringBuffer();
-		for(int i = 0; i<email.length(); i++){
-			while(i != '@'){
-				username.append(email.charAt(i));
-			}
-		}
-		return username.toString();
-	}
+	
 }
