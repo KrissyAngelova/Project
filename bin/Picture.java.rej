@@ -1,0 +1,19 @@
+diff a/src/Picture.java b/src/Picture.java	(rejected hunks)
+@@ -5,13 +5,15 @@
+ public class Picture{
+ 	private LocalDateTime dateTime;
+ 	private String description;
+-	private int likes;
++	private Client author;// Âñÿêà ñíèìêà èìà àâòîð
++	private Integer likes;
+ 	private ArrayList<Comment> comments;
+ 	private enum RatingCategory{HOT, TRENDING, FRESH};
+ 	private RatingCategory category;
+ 	
+-	Picture(String description){
++	Picture(String description, Client author){
+ 		this.description = description;
++		this.author = author;
+ 		this.dateTime = LocalDateTime.now();
+ 		this.likes = 0;
+ 		this.comments = new ArrayList<Comment>();

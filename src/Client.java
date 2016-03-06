@@ -1,5 +1,8 @@
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import dbmanager.DBManager;
 
 
 public class Client{
