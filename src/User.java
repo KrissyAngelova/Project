@@ -2,10 +2,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import dbmanager.DBManager;
+import db.DBManager;
 
 
-public class Client{
+public class User{
 	private String firstName;
 	private String lastName;
 	private String email;
@@ -23,7 +23,7 @@ public class Client{
 	private ArrayList<Comment> dislikedComments;
 	// ïðåäïîëàãàì, ÷å êàòî íàïðàâèì íåùàòà ñ áàçà äàííè, òèÿ ìàñèâè ùå îòïàäíàò îò êîäà.
 	
-	Client(String firstName, String lastName, String email, String password){
+	User(String firstName, String lastName, String email, String password){
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;

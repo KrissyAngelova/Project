@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 public class Demo {
 	
 	public static void main(String[] args) {
-		ArrayList<Client> clientsList = new ArrayList<Client>();
+		ArrayList<User> clientsList = new ArrayList<User>();
 
 		Scanner sc = new Scanner(System.in);
 
@@ -46,7 +46,7 @@ public class Demo {
 	}
 	
 	// Отделих действията с Client менюто за по-голяма четимост на кода;
-	static void clientMenuChoiceAction(Client p){
+	static void clientMenuChoiceAction(User p){
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter your choice: ");
 		int choice = sc.nextInt();
@@ -63,7 +63,7 @@ public class Demo {
 	}
 	
 	//При регистрация
-	static void registration(ArrayList<Client>list){
+	static void registration(ArrayList<User>list){
 		String firstName;
 		String lastName;
 		String email;
@@ -83,12 +83,12 @@ public class Demo {
 			password = sc.next();
 		}while(!checkForSecurePassword(password));
 		
-		list.add(new Client(firstName, lastName, email, password));
+		list.add(new User(firstName, lastName, email, password));
 		System.out.println("Your account is created!!!");
 		sc.close();
 	}
 	
-	static void logIn(ArrayList<Client> list){
+	static void logIn(ArrayList<User> list){
 		Scanner sc = new Scanner(System.in);
 		String username;
 		String password;
@@ -98,7 +98,7 @@ public class Demo {
 		password = sc.nextLine();
 		
 		if(!list.isEmpty()){
-			for(Client c : list){
+			for(User c : list){
 				if(c.getUsername().equals(username)){
 					if(c.getPass().equals(password)){
 						System.out.println("Welcome!");
@@ -119,8 +119,8 @@ public class Demo {
 	}
 	
 	// Проверка дали даденото име е свободно
-	private static boolean usernameisFree(String username, ArrayList<Client> list){
-		for(Client c : list){
+	private static boolean usernameisFree(String username, ArrayList<User> list){
+		for(User c : list){
 			if(c.getUsername().equals(username)){
 				System.out.println("This username is not free!");
 				return false;

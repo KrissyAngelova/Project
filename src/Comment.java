@@ -3,11 +3,11 @@ import java.time.LocalDateTime;
 public class Comment{
 	private LocalDateTime dateTime;
 	private String content;
-	private Client author; //Всеки коментар си има автор
+	private User author; //Всеки коментар си има автор
 	private int likes;
 	private int dislikes;
 	
-	Comment(String content, Client author){
+	Comment(String content, User author){
 		this.content = content;
 		this.author = author;
 		this.dateTime = LocalDateTime.now();

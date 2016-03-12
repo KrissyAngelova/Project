@@ -5,13 +5,13 @@ import java.util.ArrayList;
 public class Picture{
 	private LocalDateTime dateTime;
 	private String description;
-	private Client author;// Всяка снимка има автор
+	private User author;// Всяка снимка има автор
 	private Integer likes;
 	private ArrayList<Comment> comments;
 	private enum RatingCategory{HOT, TRENDING, FRESH};
 	private RatingCategory category;
 	
-	Picture(String description, Client author){
+	Picture(String description, User author){
 		this.description = description;
 		this.author = author;
 		this.dateTime = LocalDateTime.now();
