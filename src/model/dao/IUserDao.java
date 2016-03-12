@@ -12,9 +12,9 @@ public interface IUserDao {
 	static IUserDao getDAO(DataSource dataSource){
 		switch(dataSource){
 		case DB: 
-			return new DBUserDAO();
+			return new DBUserDao();
 		case JSON:
-			return new JSONUserDAO();
+			return new JSONUserDao();
 		}
 		throw new IllegalArgumentException();
 	}

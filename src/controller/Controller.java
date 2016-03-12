@@ -4,12 +4,12 @@ import java.rmi.server.UID;
 import java.util.List;
 
 import model.User;
-import model.dao.IUserDAO;
+import model.dao.IUserDao;
 
 public class Controller {
 
 	static List<User> users;
-	static IUserDAO dao= IUserDAO.getDAO(IUserDAO.DataSource.DB);
+	static IUserDao dao= IUserDao.getDAO(IUserDao.DataSource.DB);
 
 	
 	users=dao.getAllUsers();
