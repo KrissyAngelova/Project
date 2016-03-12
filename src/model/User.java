@@ -24,7 +24,7 @@ public class User{
 	private ArrayList<Comment> dislikedComments;
 	// ïðåäïîëàãàì, ÷å êàòî íàïðàâèì íåùàòà ñ áàçà äàííè, òèÿ ìàñèâè ùå îòïàäíàò îò êîäà.
 	
-	User(String firstName, String lastName, String email, String password){
+	public User(String firstName, String lastName, String email, String password){
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
