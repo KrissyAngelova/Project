@@ -9,7 +9,7 @@ import model.DBManager;
 public class User{
 	private String firstName;
 	private String lastName;
-	private String email;
+	private String email;//username
 	private String nickname;// Formiram go ot firstName i lastName
 	private String password;
 	private PrivateAlbum myPics;
@@ -35,12 +35,24 @@ public class User{
 		this.likedPics = new ArrayList();
 	}
 	
-	String getUsername(){
+	public String getEmail(){
 		return this.email;
 	}
 	
-	String getPass(){
+	public String getPass(){
 		return this.password;
+	}
+	
+	public String getFirstName(){
+		return this.firstName;
+	}
+	
+	public String getLastName(){
+		return this.lastName;
+	}
+	
+	public String getNickname(){
+		return this.nickname;
 	}
 	
 	//Ïðè êà÷âàíåòî íà ñíèìêà ñå ñúçäàâà íîâ îáåêò îò òèï ñíèìêà ñ îïèñàíèå
