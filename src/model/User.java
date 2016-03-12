@@ -3,7 +3,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import model.DBManager;
+import model.db.DBManager;
 
 
 public class User{

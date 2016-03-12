@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.User;
+import model.db.DBManager;
 
 public class DBUserDao implements IUserDao{
 
@@ -35,7 +36,7 @@ public class DBUserDao implements IUserDao{
 	@Override
 	public List<User> getAllUsers() {
 		List<User> registeredUsers = new ArrayList();
-		try( Statement st = new DBManager.getInstance().
+		try( Statement st = DBManager.getInstance().
 				getConnection().createStatement()){
 			ResultSet rs = st.executeQuery("SELECT email,firstName,lastName,password, nickName"
 					+ "FROM User");
@@ -43,6 +44,8 @@ public class DBUserDao implements IUserDao{
 				registeredUsers.add(new User(rs.getString("firstName"), rs.getString("lastName"), 
 						rs.getString("email"), rs.getString("password")));
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		return registeredUsers;
 	}
