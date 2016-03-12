@@ -1,3 +1,4 @@
+package model;
 import java.time.LocalDateTime;
 // some comment
 public class Comment{

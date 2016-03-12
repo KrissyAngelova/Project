@@ -1,8 +1,9 @@
+package model;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import db.DBManager;
+import model.DBManager;
 
 
 public class User{
