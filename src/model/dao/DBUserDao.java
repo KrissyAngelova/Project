@@ -8,16 +8,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.User;
+import model.db.DBManager;
 
 public class DBUserDao implements IUserDao{
-
+ 
+	private static DBUserDao instance;
+	private DBManager manager;
+	
+	private DBUserDao(){
+		manager = DBManager.getInstance();
+	//	System.out.println("db user dao init");
+	}
+	
+	public static DBUserDao getInstance(){
+		if(instance == null)
+			instance = new DBUserDao();
+		return instance;
+	}
+	
 	@Override
-	public void addUser(User x) {
-		try(PreparedStatement st = DBManager.getInstance().
-					getConnection().
-					prepareStatement("INSERT INTO User "
-							+ "(email,firstName,lastName,password, nickName) "
-							+ "VALUES (?, ?, ?, ?, ?)")) {
+	public boolean addUser(User x) {
+		boolean success = true;
+		String query = "INSERT INTO User "
+				+ "(email,firstName,lastName,password, nickName) "
+				+ "VALUES (?, ?, ?, ?, ?)";
+		try(PreparedStatement st = manager.getConnection().prepareStatement(query);){
 			
 			st.setString(1, x.getEmail());
 			st.setString(2, x.getFirstName());
@@ -25,25 +40,29 @@ public class DBUserDao implements IUserDao{
 			st.setString(4, x.getPass());
 			st.setString(5, x.getNickname());
 			st.execute();
-			st.close();
 		} catch (SQLException e) {
-			System.out.println("Error executing the statement in addUser:" + e.getMessage());
+			success = false;
 		}
-		
+		return success;
 	}
 
 	@Override
-	public List<User> getAllUsers() {
+	public List<User> getAllUsers() throws SQLException{
 		List<User> registeredUsers = new ArrayList();
-		try( Statement st = new DBManager.getInstance().
-				getConnection().createStatement()){
-			ResultSet rs = st.executeQuery("SELECT email,firstName,lastName,password, nickName"
-					+ "FROM User");
-			while(rs.next()){
-				registeredUsers.add(new User(rs.getString("firstName"), rs.getString("lastName"), 
-						rs.getString("email"), rs.getString("password")));
-			}
+		String query = "SELECT email,firstName,lastName,password, nickName"
+				+ "FROM User";
+		Statement st = manager.getConnection().createStatement();
+		ResultSet result = st.executeQuery(query);
+		if(result == null){
+			st.close();
+			return registeredUsers;
 		}
+		while(result.next()){
+			User u = new User(result.getString("firstName"), result.getString("lastName"),
+					result.getString("email"), result.getString("password"));
+			registeredUsers.add(u);
+		}
+		st.close();
 		return registeredUsers;
 	}
 

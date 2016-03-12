@@ -100,7 +100,7 @@ public class Demo {
 		
 		if(!list.isEmpty()){
 			for(User c : list){
-				if(c.getUsername().equals(username)){
+				if(c.getEmail().equals(username)){
 					if(c.getPass().equals(password)){
 						System.out.println("Welcome!");
 						showClientMenu();
@@ -122,7 +122,7 @@ public class Demo {
 	// ѕроверка дали даденото име е свободно
 	private static boolean usernameisFree(String username, ArrayList<User> list){
 		for(User c : list){
-			if(c.getUsername().equals(username)){
+			if(c.getEmail().equals(username)){
 				System.out.println("This username is not free!");
 				return false;
 			}
