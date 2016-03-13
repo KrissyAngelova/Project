@@ -17,8 +17,8 @@ import model.dao.IUserDao;
 /**
  * Servlet implementation class RegisterServlet
  */
-@WebServlet("/RegisterServlet")
-public class RegisterServlet extends HttpServlet {
+@WebServlet("/SignInServlet")
+public class SignUpServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -27,6 +27,8 @@ public class RegisterServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String firstName=request.getParameter("firstName");
+		String lastName=request.getParameter()
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		if (emailValidate(email)) {
