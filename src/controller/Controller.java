@@ -1,8 +1,7 @@
 package controller;
-
-import java.rmi.server.UID;
+import java.util.ArrayList;
 import java.util.List;
-
+import java.rmi.server.UID;
 import model.User;
 import model.dao.IUserDao;
 
@@ -12,9 +11,8 @@ public class Controller {// pri signUp vika model (DBUserDAO) da mu varne spisak
 							// db
 
 	static List<User> users;
-	static IUserDao dao= IUserDao.getDAO(IUserDao.DataSource.DB);
-
-	users=dao.getAllUsers();
+	static IUserDao dao = IUserDao.getDAO(IUserDao.DataSource.DB);//???????
+	users = dao.getAllUsers();
 
 	static boolean signUpUser(String firstName, String lastName, String email, String password) {
 		for (User u : users) {

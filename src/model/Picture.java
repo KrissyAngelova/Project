@@ -47,14 +47,7 @@ public class Picture{
 		else this.category = RatingCategory.HOT;
 	}
 	
-	void showPicture(){
-		System.out.println(this.author.getUsername());
-		System.out.println("-------------");
-		System.out.println("***Picture***");
-		System.out.println(dateTime+" --- Likes:"+this.likes);
-		System.out.println("-------------");
-		System.out.println(this.description);
-	}
+
 	
 	Integer getLikes(){
 		return this.likes;

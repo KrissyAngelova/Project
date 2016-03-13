@@ -39,13 +39,14 @@ public class Comment{
 		}
 	}
 	
-	void showComment(){
-		System.out.println(this.author.getUsername()+" says: ");
-		System.out.println("----------------------");
-		System.out.println(this.dateTime);
-		System.out.println(this.content);
-		System.out.println("Likes:"+this.likes+"      "+"Dislkes:"+this.dislikes);
-		System.out.println("----------------------");
+	public String getContent(){
+		return this.content;
 	}
+	
+	public LocalDateTime getDateTime(){
+		return this.dateTime;
+	}
+	
+	
 
 }
