@@ -16,7 +16,7 @@ import model.db.DBManager;
 
 public class DBPictureDao {
 
-	public void uploadPicture(User u, String picturePath, String pictureDescription) {
+	public void uploadPicture(User u, String picturePath, String pictureDescription) throws SQLException {
 		String email = u.getEmail();
 		Date date_time= new Date();
 		java.sql.Date sql_date_time=new java.sql.Date(date_time.getTime());
@@ -52,7 +52,7 @@ public class DBPictureDao {
 			System.out.println("Picture not found!");
 		}
 		finally{
-			ps.close;
+			ps.close();
 		}
 	}
 

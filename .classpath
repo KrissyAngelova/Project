@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="C:/Users/Gratsiela/Desktop/Project/lib/mysql-connector-java-5.1.38/mysql-connector-java-5.1.38/mysql-connector-java-5.1.38-bin.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
-	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-<<<<<<< HEAD
-	<classpathentry kind="lib" path="C:/Users/Криси/Documents/Desktop/java-json.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.38/mysql-connector-java-5.1.38/mysql-connector-java-5.1.38-bin.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="C:/Users/Криси/Downloads/apache-tomcat-8.0.32/lib/servlet-api.jar"/>
-=======
-	<classpathentry kind="lib" path="G:/Install/apache-tomcat-8.0.32/apache-tomcat-8.0.32/lib/servlet-api.jar"/>
->>>>>>> 6686f48d5326552d898e57f6801cb88681fc5643
+	<classpathentry kind="lib" path="C:/Users/Криси/Documents/Project/lib/java-json.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -10,7 +10,8 @@ import org.json.*;
 class JSONUserDao implements IUserDao{
 
 	@Override
-	public void addUser(User x){
+	public boolean addUser(User x){
+		boolean success = true;
 		JSONObject user = new JSONObject();
 		try{
 			user.put("email", x.getEmail());
@@ -23,8 +24,9 @@ class JSONUserDao implements IUserDao{
 			fr.write(user.toString());
 			fr.close();
 		}catch(JSONException | IOException e){
-			
+			success = false;
 		}
+		return success;
 	}
 
 	@Override

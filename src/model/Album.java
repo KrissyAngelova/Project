@@ -32,7 +32,7 @@ public abstract class Album { // За да не се създават просто албуми
 		System.out.println(this.name);
 		for(Picture p : this.pics){
 			if(p!=null){
-				p.showPicture();
+				//p.showPicture();
 			}
 		}
 	}
