@@ -20,22 +20,28 @@ public class DBPictureDao {
 		String email = u.getEmail();
 		Date date_time= new Date();
 		java.sql.Date sql_date_time=new java.sql.Date(date_time.getTime());
-		FileInputStream fis=null;
-		PreparedStatement ps=null;
-		try {
-			Connection connection=DBManager.getInstance().getConnection();
-			Statement st = connection.createStatement();
+		Connection connection=DBManager.getInstance().getConnection();
+		
+		// check if the current user has album myPictures in db
+		Statement st = connection.createStatement()
 			ResultSet rs = st.executeQuery(
 					"SELECT album_name FROM krasiva.album WHERE album_name=\"myPictures\" AND user_email=\"" + email
 							+ "\";");
+		// if no, album newPictures is created for this user
 			if (!rs.next()) {
 				rs = st.executeQuery("INSERT INTO krasiva.album (album_name, user_email) VALUES(\"myPictures\", \""
 						+ email + "\");");
 			}
 			
-			connection.setAutoCommit(false);
+		// adding the current picture in db
+			try{
 			File picture= new File(picturePath);
-			fis= new FileInputStream(picture);
+			}
+			catch{
+				System.out.println("Picture not found!");
+			}
+			try(FileInputStream fis=new FileInputStream(picture)){
+			connection.setAutoCommit(false);
 			ps=DBManager.getInstance().getConnection().prepareStatement("INSERT INTO krasiva.post (post_photo, post_description, post_category, post_date_time, post_likes, user_email) VALUES (?,?,?,?,?,?);");
 			ps.setBinaryStream(1, fis, picture.length());
 			ps.setString(2, pictureDescription);
@@ -48,12 +54,9 @@ public class DBPictureDao {
 		} catch (SQLException e) {
 			System.out.println("Picture uploading FAILED!");
 		}
-		catch(FileNotFoundException e){
-			System.out.println("Picture not found!");
-		}
-		finally{
-			ps.close;
-		}
+		
+		// adding the current picture to album myPictures of the current user
+			rs.
 	}
 
 	public void likePicture() {

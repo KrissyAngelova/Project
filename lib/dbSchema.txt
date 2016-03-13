@@ -1,36 +1,48 @@
 CREATE SCHEMA krasiva;
 
 CREATE TABLE krasiva.user(
-user_email VARCHAR(255) NOT NULL PRIMARY KEY,
+email VARCHAR(255) NOT NULL PRIMARY KEY,
 nickname VARCHAR(255) NOT NULL,
-pass VARCHAR(50) NOT NULL,
+password VARCHAR(50) NOT NULL,
 firstName VARCHAR(50) NOT NULL,
 lastName VARCHAR(50) NOT NULL);
 
 CREATE TABLE krasiva.album(
-	album_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+	albumID BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     name VARCHAR(255) NOT NULL,
-    user_email VARCHAR(255),
-    FOREIGN KEY (user_email) REFERENCES user(user_email)
+    userEmail VARCHAR(255) NOT NULL,
+    FOREIGN KEY (userEmail) REFERENCES user(email)
     ON DELETE CASCADE ON UPDATE CASCADE
     );
     
 CREATE TABLE krasiva.post(
-	post_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+	postID BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     photo BLOB NOT NULL,
     description TEXT DEFAULT NULL,
     category VARCHAR(255) NOT NULL,
-    date_time DATETIME NOT NULL,
+    dateTime DATETIME NOT NULL,
     likes INT,
-    user_email VARCHAR(255),
-    FOREIGN KEY(user_email) REFERENCES user(user_email)
+    userEmail VARCHAR(255),
+    FOREIGN KEY(userEmail) REFERENCES user(email)
     ON DELETE CASCADE ON UPDATE CASCADE
     );
     
-CREATE TABLE krasiva.post_album_relation(
-	album_id BIGINT,
-    post_id BIGINT,
-    PRIMARY KEY(album_id, post_id),
-    FOREIGN KEY(album_id) REFERENCES album(album_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY(post_id) REFERENCES post(post_id) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE krasiva.albumPosts(
+	albumID BIGINT NOT NULL,
+    postID BIGINT NOT NULL,
+    PRIMARY KEY(albumID, postID),
+    FOREIGN KEY(albumID) REFERENCES album(albumID) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY(postID) REFERENCES post(postID) ON DELETE CASCADE ON UPDATE CASCADE
     );
+
+CREATE TABLE krasiva.comment(
+	commentID BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	content VARCHAR(255) NOT NULL,
+	dateTime DATETIME NOT NULL,
+	likes INT,
+	dislikes INT,
+	postID BIGINT NOT NULL,
+	userEmail VARCHAR(255) NOT NULL,
+	FOREIGN KEY (postID) REFERENCES post(postID) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (userEmail) REFERENCES user(email) ON DELETE CASCADE ON UPDATE CASCADE
+	);
