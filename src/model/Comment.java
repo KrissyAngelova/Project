@@ -16,6 +16,13 @@ public class Comment{
 		this.dislikes = 0;
 	}
 
+	public Comment(String content, LocalDateTime dt, int likes, int dislikes){
+		this.content = content;
+	//	this.author = author;
+		this.dateTime = dt;
+		this.likes = likes;
+		this.dislikes = dislikes;
+	}
 	// Да харесаш коментар
 	public void beLiked() {
 		this.likes++;

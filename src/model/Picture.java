@@ -52,4 +52,8 @@ public class Picture{
 	Integer getLikes(){
 		return this.likes;
 	}
+	
+	public LocalDateTime getDateTime(){
+		return this.dateTime;
+	}
 }

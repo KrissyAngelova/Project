@@ -48,7 +48,7 @@ public class DBUserDao implements IUserDao{
 	}
 
 	@Override
-	public List<User> getAllUsers() throws SQLException{
+	public ArrayList<User> getAllUsers() throws SQLException{
 		List<User> registeredUsers = new ArrayList();
 
 		String query = "SELECT email,firstName,lastName,password, nickName"
@@ -57,7 +57,7 @@ public class DBUserDao implements IUserDao{
 		ResultSet result = st.executeQuery(query);
 		if(result == null){
 			st.close();				
-			return registeredUsers;
+			return (ArrayList<User>) registeredUsers;
 		}
 		while(result.next()){
 			User u = new User(result.getString("firstName"), result.getString("lastName"),						
@@ -65,6 +65,6 @@ public class DBUserDao implements IUserDao{
 				registeredUsers.add(u);
 			}
 		
-		return registeredUsers;
+		return (ArrayList<User>) registeredUsers;
 	}
 }
