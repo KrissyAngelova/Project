@@ -24,5 +24,6 @@ public class Controller {// pri signUp vika model (DBUserDAO) da mu varne spisak
 		}
 		User newUser = new User(firstName, lastName, email, password);
 		dao.addUser(newUser);
+		return true;
 	}
 }

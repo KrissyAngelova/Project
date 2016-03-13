@@ -27,20 +27,19 @@ public class SignUpServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String firstName=request.getParameter("firstName");
-		String lastName=request.getParameter()
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		if (emailValidate(email)) {
-			for (User user : IUserDao.getDAO(IUserDao.DataSource.DB).getAllUsers()) {
-				if (user.getEmail().equals(email) && user.getPass().equals(password)) {
-					request.getSession().setAttribute("loggedUser", user);
-					response.sendRedirect("index.html");
-					return;
-				}
+			if (Controller.signUpUser(firstName, lastName, email, password)) {
+				response.sendRedirect("index.html");
+				return;
 			}
+		} else {
+			response.sendRedirect("login.html");
+			return;
 		}
-		response.sendRedirect("login.html");
 	}
 
 	private static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern

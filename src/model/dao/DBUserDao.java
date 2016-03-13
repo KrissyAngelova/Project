@@ -30,7 +30,6 @@ public class DBUserDao implements IUserDao{
 		} catch (SQLException e) {
 			System.out.println("Error executing the statement in addUser:" + e.getMessage());
 		}
-		
 	}
 
 	@Override
