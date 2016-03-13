@@ -43,12 +43,16 @@ public class DBUserDao implements IUserDao{
 		} catch (SQLException e) {
 			success = false;
 		}
+<<<<<<< HEAD
 		return success;
+=======
+>>>>>>> 6686f48d5326552d898e57f6801cb88681fc5643
 	}
 
 	@Override
 	public List<User> getAllUsers() throws SQLException{
 		List<User> registeredUsers = new ArrayList();
+<<<<<<< HEAD
 		String query = "SELECT email,firstName,lastName,password, nickName"
 				+ "FROM User";
 		Statement st = manager.getConnection().createStatement();
@@ -61,6 +65,18 @@ public class DBUserDao implements IUserDao{
 			User u = new User(result.getString("firstName"), result.getString("lastName"),
 					result.getString("email"), result.getString("password"));
 			registeredUsers.add(u);
+=======
+		try( Statement st = DBManager.getInstance().
+				getConnection().createStatement()){
+			ResultSet rs = st.executeQuery("SELECT email,firstName,lastName,password, nickName"
+					+ "FROM User");
+			while(rs.next()){
+				registeredUsers.add(new User(rs.getString("firstName"), rs.getString("lastName"), 
+						rs.getString("email"), rs.getString("password")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+>>>>>>> 6686f48d5326552d898e57f6801cb88681fc5643
 		}
 		st.close();
 		return registeredUsers;
