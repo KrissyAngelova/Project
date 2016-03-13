@@ -25,11 +25,11 @@ public class DBPictureDao {
 		// check if the current user has album myPictures in db
 		Statement st = connection.createStatement()
 			ResultSet rs = st.executeQuery(
-					"SELECT album_name FROM krasiva.album WHERE album_name=\"myPictures\" AND user_email=\"" + email
+					"SELECT album_name FROM krasiva.album WHERE album.name=\"myPictures\" AND album.userEmail=\"" + email
 							+ "\";");
 		// if no, album newPictures is created for this user
 			if (!rs.next()) {
-				rs = st.executeQuery("INSERT INTO krasiva.album (album_name, user_email) VALUES(\"myPictures\", \""
+				rs = st.executeQuery("INSERT INTO krasiva.album (album.name, album.userEmail) VALUES(\"myPictures\", \""
 						+ email + "\");");
 			}
 			
@@ -56,7 +56,7 @@ public class DBPictureDao {
 		}
 		
 		// adding the current picture to album myPictures of the current user
-			rs.
+			
 	}
 
 	public void likePicture() {
