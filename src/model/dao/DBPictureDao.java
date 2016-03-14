@@ -11,17 +11,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 
+import model.Picture;
 import model.User;
 import model.db.DBManager;
 
 public class DBPictureDao {
 
+	static Connection connection = DBManager.getInstance().getConnection();
+	
 	public void uploadPicture(User u, String picturePath, String pictureDescription) throws SQLException {
 		String email = u.getEmail();
 		Date date_time = new Date();
 		java.sql.Date sql_date_time = new java.sql.Date(date_time.getTime());
-		Connection connection = DBManager.getInstance().getConnection();
-
+		
 		// check if the current user has album myPictures in db
 		Statement st = connection.createStatement();
 		ResultSet rs = st.executeQuery(
@@ -83,5 +85,19 @@ public class DBPictureDao {
 	}
 
 	public void unpinPicture() {
+	}
+	
+	public static int getPostIdFromTable(Picture pic) {
+		String sql = "SELECT postID FROM Post"
+				+ "WHERE dateTime = "+java.sql.Timestamp.valueOf(pic.getDateTime())+";";
+		try(Statement stmt = connection.prepareStatement(sql)){
+	      ResultSet rs = stmt.executeQuery(sql);
+	      while(rs.next()){
+	         return rs.getInt("id");
+	      }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;
 	}
 }

@@ -20,7 +20,7 @@ CREATE TABLE krasiva.post(
     photo BLOB NOT NULL,
     description TEXT DEFAULT NULL,
     category VARCHAR(255) NOT NULL,
-    dateTime DATETIME NOT NULL,
+    dateTime TIMESTAMP NOT NULL,
     likes INT,
     userEmail VARCHAR(255),
     FOREIGN KEY(userEmail) REFERENCES user(email)
@@ -38,9 +38,7 @@ CREATE TABLE krasiva.albumPosts(
 CREATE TABLE krasiva.comment(
 	commentID BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
 	content VARCHAR(255) NOT NULL,
-	dateTime DATETIME NOT NULL,
-	likes INT,
-	dislikes INT,
+	dateTime TIMESTAMP NOT NULL,
 	postID BIGINT NOT NULL,
 	userEmail VARCHAR(255) NOT NULL,
 	FOREIGN KEY (postID) REFERENCES post(postID) ON DELETE CASCADE ON UPDATE CASCADE,

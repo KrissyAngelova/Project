@@ -29,32 +29,26 @@ public class DBCommentDao {
 		return instance;
 	}
 	
-	public void addComment(User u, Comment com, Picture pic){
+	public void addComment(User u, Comment com, Picture pic) throws SQLException{
 		boolean success = true;
+		manager.getConnection().setAutoCommit(false);
 		String query = "INSERT INTO Comment "
-				+ "(content, dateTime, likes, dislikes, postID, clientEmail) "
+				+ "(content, dateTime,postID, clientEmail) "
 				+ "VALUES (?, ?, ?, ?, ?, ?);";
 		java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf(com.getDateTime());
 		
 		try(PreparedStatement st = manager.getConnection().prepareStatement(query);){
-			
-			manager.getConnection().setAutoCommit(false);
 			st.setString(1, com.getContent());
 			st.setTimestamp(2, timestamp);
-			st.setInt(3, 0);
-			st.setInt(4, 0);
-			Statement s = manager.getConnection().createStatement();
-			ResultSet rs = s.executeQuery("SELECT postID FROM Post"
-					+ "WHERE dateTime = "+java.sql.Timestamp.valueOf(pic.getDateTime())+";");
-			st.setInt(5, rs.getInt("postID"));
-			st.setString(6, u.getEmail());
+			st.setInt(3, DBPictureDao.getPostIdFromTable(pic));
+			st.setString(4, u.getEmail());
 			st.execute();
-			manager.getConnection().commit();
-			s.close();
+			
 			
 		} catch (SQLException e) {
 			success = false;
 		}
+		manager.getConnection().commit();
 	}
 	
 	public ArrayList<Comment> getAllCommentsAtPost(Picture pic){
@@ -77,8 +71,7 @@ public class DBCommentDao {
 				return (ArrayList<Comment>) comments;
 			}
 			while(result.next()){
-				Comment com = new Comment(result.getString("content"),result.getTimestamp("dateTime").toLocalDateTime(),
-											result.getInt("likes"), result.getInt("dislikes"));
+				Comment com = new Comment(result.getString("content"),result.getTimestamp("dateTime").toLocalDateTime());
 					comments.add(com);
 				}
 		}catch(SQLException e){
