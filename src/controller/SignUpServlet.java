@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Enumeration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,8 +29,10 @@ public class SignUpServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String firstName = request.getParameter("firstName");
+		System.out.println(firstName);
 		String lastName = request.getParameter("lastName");
 		String email = request.getParameter("email");
+		System.out.println(email);
 		String password = request.getParameter("password");
 		if (emailValidate(email)) {
 			if (Controller.signUpUser(firstName, lastName, email, password)) {

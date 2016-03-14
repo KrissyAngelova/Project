@@ -20,4 +20,8 @@ public interface IUserDao {
 		throw new IllegalArgumentException();
 	}
 	
+	public static IUserDao getDAO(){
+			return DBUserDao.getInstance();
+	}
+	
 }
