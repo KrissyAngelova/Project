@@ -12,20 +12,31 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 
+<<<<<<< HEAD
+import model.Picture;
+=======
 import javax.sql.rowset.serial.SQLOutputImpl;
 
 import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
 
+>>>>>>> 4426c3b825e8aca6505a640e821b7e4a8cad03df
 import model.User;
 import model.db.DBManager;
 
 public class DBPictureDao {
 
+	static Connection connection = DBManager.getInstance().getConnection();
+	
 	public void uploadPicture(User u, String picturePath, String pictureDescription) throws SQLException {
 		// check if the current user has album myPictures in db
 		Date date_time = new Date();
 		java.sql.Date sql_date_time = new java.sql.Date(date_time.getTime());
+
+		
+		// check if the current user has album myPictures in db
+
 		Connection connection = DBManager.getInstance().getConnection();
+
 		Statement st = connection.createStatement();
 		ResultSet rs = null;
 		PreparedStatement ps = null;
@@ -218,6 +229,21 @@ rs.close();
 				System.out.println("Problem with .close() in unpinPicture()!");
 			}
 		}
+	}
+
+	
+	public static int getPostIdFromTable(Picture pic) {
+		String sql = "SELECT postID FROM Post"
+				+ "WHERE dateTime = "+java.sql.Timestamp.valueOf(pic.getDateTime())+";";
+		try(Statement stmt = connection.prepareStatement(sql)){
+	      ResultSet rs = stmt.executeQuery(sql);
+	      while(rs.next()){
+	         return rs.getInt("id");
+	      }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;
 	}
 
 }
