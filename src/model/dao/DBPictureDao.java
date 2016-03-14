@@ -34,6 +34,8 @@ public class DBPictureDao {
 			rs = st.executeQuery(
 					"SELECT album_name FROM krasiva.album WHERE album.name=\"myPictures\" AND album.userEmail=\""
 							+ u.getEmail() + "\";");
+			rs.close();
+			
 			// if no, album newPictures is created for this user
 			if (!rs.next()) {
 				rs = st.executeQuery("INSERT INTO krasiva.album (album.name, album.userEmail) VALUES(\"myPictures\", \""
@@ -54,6 +56,7 @@ public class DBPictureDao {
 			ps.setString(6, u.getEmail());
 			ps.executeUpdate();
 			connection.commit();
+			ps.close();
 
 			// adding the current picture to album myPictures of the current
 			// user
@@ -111,18 +114,35 @@ public class DBPictureDao {
 				rs.close();
 			} catch (SQLException e) {
 				System.out.println("Problem with .close() in likePicture()!");
-			}			
+			}
 		}
 	}
 
 	public void unlikePicture(User u, Long pictureID) {
 		Connection connection = DBManager.getInstance().getConnection();
+		Statement st = null;
+		ResultSet rs = null;
 		try {
-			Statement st = connection.createStatement();
-			ResultSet rs = st.executeQuery("DELETE FROM krasiva.userLikedPosts WHERE postID=" + pictureID
-					+ " AND userEmail=" + u.getEmail() + ";");
+			st = connection.createStatement();
+			rs = st.executeQuery("DELETE FROM krasiva.userLikedPosts WHERE postID=" + pictureID + " AND userEmail="
+					+ u.getEmail() + ";");
+			st.close();
+			
+			// decrementing the number of like of this picture
+						st = connection.createStatement();
+						rs = st.executeQuery("SELECT likes FROM krasiva.post WHERE postID=" + pictureID + ";");
+						int pictureLikes = rs.getInt("likes");
+						st.execute("UPDATE krasiva.post SET likes=" + (--pictureLikes) + " WHERE postID=" + pictureID + ";");
 		} catch (SQLException e) {
-			System.out.println("Deleting picture from likedPictures failed!");
+			System.out.println("Problem in unlikePicture()!");
+		} finally {
+			try {
+				connection.close();
+				st.close();
+				rs.close();
+			} catch (SQLException e) {
+				System.out.println("Problem with .close() in unlikePicture()!");
+			}
 		}
 	}
 
@@ -130,54 +150,73 @@ public class DBPictureDao {
 		// check if the current user has album favouritePictures in db
 		Connection connection = DBManager.getInstance().getConnection();
 		Statement st = null;
-		Result
+		ResultSet rs = null;
+		PreparedStatement ps = null;
 		try {
 			st = connection.createStatement();
-			ResultSet rs = st.executeQuery(
+			rs = st.executeQuery(
 					"SELECT album_name FROM krasiva.album WHERE album.name=\"favouritePictures\" AND album.userEmail=\""
 							+ u.getEmail() + "\";");
-
+rs.close();
+			
 			// if no, album favouritePictures is created for this user
 			if (!rs.next()) {
 				rs = st.executeQuery(
 						"INSERT INTO krasiva.album (album.name, album.userEmail) VALUES(\"favouritePictures\", \""
 								+ u.getEmail() + "\");");
 			}
-		} catch (SQLException e) {
-			System.out.println("Creating album favouritePicturees failed!");
-		}
 
-		// adding the current picture to album favouritePictures of the current
-		// user
-		try {
-			ResultSet rs = st.executeQuery("SELECT albumID FROM krasiva.album WHERE album.userEmail=\"" + u.getEmail()
+			// adding the current picture to album favouritePictures of the
+			// current
+			// user
+			rs = st.executeQuery("SELECT albumID FROM krasiva.album WHERE album.userEmail=\"" + u.getEmail()
 					+ "\" && album.name=\"favouritePictures\";");
 			long albumID = rs.getInt("albumID");
-
 			connection.setAutoCommit(false);
-			PreparedStatement ps = connection
-					.prepareStatement("INSERT INTO krasiva.albumPosts (albumID, postID) Values(?,?);");
+			ps = connection.prepareStatement("INSERT INTO krasiva.albumPosts (albumID, postID) Values(?,?);");
 			ps.setLong(1, albumID);
 			ps.setLong(2, pictureID);
 			ps.executeUpdate();
 			connection.commit();
 		} catch (SQLException e) {
-			System.out.println("Adding picture to album favouritePictures failed!");
+			System.out.println("Problem in pinPicture()!");
+		} finally {
+			try {
+				connection.close();
+				st.close();
+				rs.close();
+				ps.close();
+			} catch (SQLException e) {
+				System.out.println("Problem with .close() in pinPicture()!");
+			}
 		}
+
 	}
 
 	public void unpinPicture(User u, Long pictureID) {
+		Connection connection = DBManager.getInstance().getConnection();
+		Statement st = null;
+		ResultSet rs = null;
 		try {
-			Connection connection = DBManager.getInstance().getConnection();
-			Statement st = connection.createStatement();
-			ResultSet rs = st.executeQuery("SELECT albumID FROM krasiva.album WHERE album.userEmail=\"" + u.getEmail()
+			st = connection.createStatement();
+			rs = st.executeQuery("SELECT albumID FROM krasiva.album WHERE album.userEmail=\"" + u.getEmail()
 					+ "\" && album.name=\"favouritePictures\";");
 			long albumID = rs.getInt("albumID");
-			st.executeQuery(
+			rs.close();
+			
+			rs=st.executeQuery(
 					"DELETE FROM krasiva.albumPosts WHERE postID=" + pictureID + " AND albumID=" + albumID + ";");
 			int pictureLikes = rs.getInt("likes");
 		} catch (SQLException e) {
-			System.out.println("Removing picture from album favouritePictures of this user failed!");
+			System.out.println("Problem in unpinPicture()!");
+		}
+		finally{
+			try{connection.close();
+			st.close();
+			rs.close();}
+			catch(SQLException e){
+				System.out.println("Problem with .close() in unpinPicture()!");
+			}
 		}
 	}
 
