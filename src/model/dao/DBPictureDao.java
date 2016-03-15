@@ -12,14 +12,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 
-<<<<<<< HEAD
+
 import model.Picture;
-=======
+
 import javax.sql.rowset.serial.SQLOutputImpl;
 
 import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
 
->>>>>>> 4426c3b825e8aca6505a640e821b7e4a8cad03df
 import model.User;
 import model.db.DBManager;
 

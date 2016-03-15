@@ -107,47 +107,6 @@ public class User{
 		}
 	}
 	
-
-    // Çà like-âàíå  íà êîìåíòàð	
-	void likeComment(Comment c){
-		if(c!=null){
-			if(!this.likedComments.contains(c)){
-				c.beLiked();
-				this.likedComments.add(c);
-			}
-		}
-	}
-	
-	// Çà unlike-âàíå íà like-íàò êîìåíòàð
-	void unlikeComment(Comment c){
-		if(c!=null){
-			if(this.likedComments.contains(c)){
-				c.beUnliked();
-				this.likedComments.remove(c);
-			}
-		}
-	}
-	
-	// Çà dislike-âàíå íà êîìåíòàð
-	void disLikeComment(Comment c){
-		if(c!=null){
-			if(!this.dislikedComments.contains(c)){
-				c.beDisLiked();
-				this.dislikedComments.add(c);
-			}
-		}
-	}
-	
-	// Çà undislike-âàíå íà dislike-íàò êîìåíòàð
-	void undislikeComment(Comment c){
-		if(c!=null){
-			if(this.dislikedComments.contains(c)){
-				c.beUndisliked();
-				this.dislikedComments.add(c);
-			}
-		}
-	}
-	
 	//Âñåêè êëèåíò âèæäà áóòîíèòå:"My Pics", "Favourites", "New Pictures", "Top Rated"
 	void showMyPics(){
 		if(this.myPics.pics.isEmpty()){
