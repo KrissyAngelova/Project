@@ -29,12 +29,11 @@ public class SignUpServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String firstName = request.getParameter("firstName");
-		System.out.println(firstName);
 		String lastName = request.getParameter("lastName");
 		String email = request.getParameter("email");
-		System.out.println(email);
 		String password = request.getParameter("password");
 		if (emailValidate(email)) {
+			System.out.println(1);
 			if (Controller.signUpUser(firstName, lastName, email, password)) {
 				response.sendRedirect("index.html");
 				return;

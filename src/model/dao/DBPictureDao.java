@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,14 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 
-<<<<<<< HEAD
 import model.Picture;
-=======
-import javax.sql.rowset.serial.SQLOutputImpl;
-
-import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
-
->>>>>>> 4426c3b825e8aca6505a640e821b7e4a8cad03df
 import model.User;
 import model.db.DBManager;
 
@@ -27,7 +19,7 @@ public class DBPictureDao {
 
 	static Connection connection = DBManager.getInstance().getConnection();
 	
-	public void uploadPicture(User u, String picturePath, String pictureDescription) throws SQLException {
+	public void uploadPicture(User u, String picturePath, String pictureDescription) {
 		// check if the current user has album myPictures in db
 		Date date_time = new Date();
 		java.sql.Date sql_date_time = new java.sql.Date(date_time.getTime());
@@ -37,11 +29,12 @@ public class DBPictureDao {
 
 		Connection connection = DBManager.getInstance().getConnection();
 
-		Statement st = connection.createStatement();
+		Statement st;
 		ResultSet rs = null;
 		PreparedStatement ps = null;
 		FileInputStream fis = null;
 		try {
+			st = connection.createStatement();
 			rs = st.executeQuery(
 					"SELECT album_name FROM krasiva.album WHERE album.name=\"myPictures\" AND album.userEmail=\""
 							+ u.getEmail() + "\";");
@@ -85,15 +78,14 @@ public class DBPictureDao {
 			ps.setLong(2, postID);
 			ps.executeUpdate();
 			connection.commit();
-		} catch (SQLException | FileNotFoundException e) {
+		} catch (FileNotFoundException | SQLException e) {
 			System.out.println("Problem in uploadPicture()!");
 		} finally {
-			connection.close();
+			try{connection.close();
 			rs.close();
 			ps.close();
-			try {
 				fis.close();
-			} catch (IOException e) {
+			} catch (IOException | SQLException e) {
 				System.out.println("Problem with fis.close() in uploadPicture()!");
 			}
 		}

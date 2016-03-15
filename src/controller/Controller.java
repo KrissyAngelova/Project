@@ -13,6 +13,7 @@ public class Controller {// pri signUp vika model (DBUserDAO) da mu varne spisak
 							// db
 
 	static boolean signUpUser(String firstName, String lastName, String email, String password) {
+		System.out.println(2);
 		IUserDao dao = IUserDao.getDAO();
 		List<User> users=null;
 		try {
@@ -26,6 +27,7 @@ public class Controller {// pri signUp vika model (DBUserDAO) da mu varne spisak
 			}
 		}
 		User newUser = new User(firstName, lastName, email, password);
+		System.out.println(2);
 		dao.addUser(newUser);
 		return true;
 	}

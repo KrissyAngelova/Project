@@ -1,7 +1,8 @@
 CREATE SCHEMA krasiva;
+USE krasiva;
 
 CREATE TABLE krasiva.user(
-email VARCHAR(255) NOT NULL PRIMARY KEY,
+email VARCHAR(255) PRIMARY KEY NOT NULL ,
 nickname VARCHAR(255) NOT NULL,
 password VARCHAR(50) NOT NULL,
 firstName VARCHAR(50) NOT NULL,
@@ -20,7 +21,7 @@ CREATE TABLE krasiva.post(
     photo BLOB NOT NULL,
     description TEXT DEFAULT NULL,
     category VARCHAR(255) NOT NULL,
-    dateTime TIMESTAMP NOT NULL,
+    dateTime DATETIME NOT NULL,
     likes INT,
     userEmail VARCHAR(255),
     FOREIGN KEY(userEmail) REFERENCES user(email)
@@ -38,7 +39,9 @@ CREATE TABLE krasiva.albumPosts(
 CREATE TABLE krasiva.comment(
 	commentID BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
 	content VARCHAR(255) NOT NULL,
-	dateTime TIMESTAMP NOT NULL,
+	dateTime DATETIME NOT NULL,
+	likes INT,
+	dislikes INT,
 	postID BIGINT NOT NULL,
 	userEmail VARCHAR(255) NOT NULL,
 	FOREIGN KEY (postID) REFERENCES post(postID) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -52,4 +55,3 @@ CREATE TABLE krasiva.userLikedPosts(
     FOREIGN KEY(userEmail) REFERENCES user(email) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY(postID) REFERENCES post(postID) ON DELETE CASCADE ON UPDATE CASCADE
     );
-    
