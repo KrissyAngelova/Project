@@ -31,8 +31,9 @@ public class DBManager { //TABLES CREATION does not work fine,
 		DBManager.getInstance();
 	}
 
-	private DBManager() {
+	private DBManager() {		
 		try {
+			
 			Class.forName("com.mysql.jdbc.Driver");
 			System.out.println("Driver loaded!");
 			connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);

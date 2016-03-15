@@ -16,7 +16,6 @@ public class DBUserDao implements IUserDao{
 	private DBManager manager;
 	
 	private DBUserDao(){
-		System.out.println(4);
 		manager = DBManager.getInstance();
 	//	System.out.println("db user dao init");
 	}
@@ -24,6 +23,7 @@ public class DBUserDao implements IUserDao{
 	public static DBUserDao getInstance(){
 		if(instance == null)
 			instance = new DBUserDao();
+		System.out.println("DBUSER GET INST");
 		return instance;
 	}
 	
@@ -49,13 +49,15 @@ public class DBUserDao implements IUserDao{
 	}
 
 	@Override
-	public ArrayList<User> getAllUsers() throws SQLException{
+	public ArrayList<User> getAllUsers() {
 		List<User> registeredUsers = new ArrayList();
-
-		String query = "SELECT email,firstName,lastName,password, nickName"
-				+ "FROM User";
+		try{
+System.out.println("getUSers");
+		String query = "SELECT email,firstName,lastName,password, nickName "
+				+ "FROM krasiva.user;";
 		Statement st = manager.getConnection().createStatement();
 		ResultSet result = st.executeQuery(query);
+		System.out.println("query");
 		if(result == null){
 			st.close();				
 			return (ArrayList<User>) registeredUsers;
@@ -66,6 +68,11 @@ public class DBUserDao implements IUserDao{
 				registeredUsers.add(u);
 			}
 		
+		}catch(SQLException e){
+			System.out.println("Problem getUSers()!");
+		}
 		return (ArrayList<User>) registeredUsers;
+
+		
 	}
 }

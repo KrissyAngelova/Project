@@ -27,14 +27,16 @@ public class LogInServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		if(emailValidate(username)){
 			try{
-				for(User u : IUserDao.getDAO(DataSource.DB).getAllUsers()){
+				//ne raboti
+				for(User u : IUserDao.getDAO(DataSource.DB).getAllUsers()){	
+									
 					if(u.getEmail().equals(username) && u.getPass().equals(password)){
 						request.getSession().setAttribute("loggedUser", u);
 						//prashtame go na nachalna stranica
-						return;
+						response.sendRedirect("index.html");
 					}
 				}
-				response.sendRedirect("login.html");
+				
 			}catch(SQLException e){
 				response.sendRedirect("login.html");
 			}

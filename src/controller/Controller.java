@@ -20,11 +20,12 @@ public class Controller {// pri signUp vika model (DBUserDAO) da mu varne spisak
 			users = dao.getAllUsers();
 		} catch (SQLException e) {
 		}
-		
+		if( users != null ){
 		for (User u : users) {
 			if (u.getEmail().equals(email)) {
 				return false;
 			}
+		}
 		}
 		User newUser = new User(firstName, lastName, email, password);
 		System.out.println(2);

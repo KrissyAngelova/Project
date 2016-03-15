@@ -13,7 +13,7 @@ public interface IUserDao {
 	public static IUserDao getDAO(DataSource dataSource){
 		switch(dataSource){
 		case DB: 
-			
+			System.out.println("IDAO");
 			return DBUserDao.getInstance();
 		case JSON:
 			return new JSONUserDao();
