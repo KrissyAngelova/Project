@@ -16,6 +16,7 @@ public class DBUserDao implements IUserDao{
 	private DBManager manager;
 	
 	private DBUserDao(){
+		System.out.println(4);
 		manager = DBManager.getInstance();
 	//	System.out.println("db user dao init");
 	}

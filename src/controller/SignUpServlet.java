@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Enumeration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,6 +33,7 @@ public class SignUpServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		if (emailValidate(email)) {
+			System.out.println(1);
 			if (Controller.signUpUser(firstName, lastName, email, password)) {
 				response.sendRedirect("index.html");
 				return;

@@ -13,11 +13,17 @@ public interface IUserDao {
 	public static IUserDao getDAO(DataSource dataSource){
 		switch(dataSource){
 		case DB: 
+			
 			return DBUserDao.getInstance();
 		case JSON:
 			return new JSONUserDao();
 		}
 		throw new IllegalArgumentException();
+	}
+	
+	public static IUserDao getDAO(){
+		System.out.println(3);
+			return DBUserDao.getInstance();
 	}
 	
 }
