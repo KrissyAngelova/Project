@@ -107,6 +107,8 @@ public class User{
 		}
 	}
 	
+<<<<<<< HEAD
+=======
 
 //    // Çà like-âàíå  íà êîìåíòàð	
 //	void likeComment(Comment c){
@@ -148,6 +150,7 @@ public class User{
 //		}
 //	}
 	
+>>>>>>> 8ea9d3cc77df61859cfa2a5a7be4fc503a032036
 	//Âñåêè êëèåíò âèæäà áóòîíèòå:"My Pics", "Favourites", "New Pictures", "Top Rated"
 	void showMyPics(){
 		if(this.myPics.pics.isEmpty()){
